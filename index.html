@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Average Calculator</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #ac0000;
+        }
+        button {
+            background-color: #eefb01;
+            color: #0f0e0e;
+            border: none;
+            padding: 12px 25px;
+            margin: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0cd8f3;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        p {
+            background-color: #fff;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            width: 90%;
+            word-wrap: break-word;
+            color: #ea5713;
+        }
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+        .button-container {
+            margin-bottom: 25px;
+        }
+    </style>
+    <script>
+        async function fetchNumbers(type) {
+            const response = await fetch(`/numbers/${type}`);
+            const data = await response.json();
+
+            document.getElementById('prev-state').textContent = JSON.stringify(data.windowPrevState, null, 2);
+            document.getElementById('curr-state').textContent = JSON.stringify(data.windowCurrState, null, 2);
+            document.getElementById('numbers').textContent = JSON.stringify(data.numbers, null, 2);
+            document.getElementById('avg').textContent = data.avg;
+        }
+    </script>
+</head>
+<body>
+    <h1>Average Calculator</h1>
+    <div class="button-container">
+        <button onclick="fetchNumbers('p')">Prime</button>
+        <button onclick="fetchNumbers('f')">Fibonacci</button>
+        <button onclick="fetchNumbers('e')">Even</button>
+        <button onclick="fetchNumbers('r')">Random</button>
+    </div>
+    <div class="container">
+        <h2>Previous State:</h2>
+        <p id="prev-state"></p>
+        <h2>Current State:</h2>
+        <p id="curr-state"></p>
+        <h2>Numbers Fetched:</h2>
+        <p id="numbers"></p>
+        <h2>Average:</h2>
+        <p id="avg"></p>
+    </div>
+</body>
+</html>
